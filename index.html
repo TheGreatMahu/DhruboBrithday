@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Happy Birthday, Dhrubo ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@200;300;400;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#d4a843;
+  --gold-light:#f0d080;
+  --blush:#e8849a;
+  --lavender:#b8a0d8;
+  --bg:#07060f;
+  --text:#f0ebe0;
+  --muted:#7a7088;
+  --warm:#c8bfb0;
+}
+html{ background:var(--bg); }
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Josefin Sans',sans-serif;
+  overflow-x:clip;
+}
+
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
+#progress{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--blush),var(--lavender));
+  z-index:999;width:0%;
+}
+
+#musicBtn{
+  position:fixed;top:18px;right:18px;z-index:1000;
+  background:rgba(212,168,67,.1);
+  border:1px solid rgba(212,168,67,.25);
+  color:var(--gold-light);padding:8px 18px;border-radius:2px;
+  cursor:pointer;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;
+  font-family:'Josefin Sans',sans-serif;font-weight:300;
+  backdrop-filter:blur(12px);transition:all .3s ease;
+}
+#musicBtn:hover{background:rgba(212,168,67,.2);border-color:var(--gold);}
+
+section{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+
+/* ══════════════
+   LANDING
+══════════════ */
+#landing{
+  flex-direction:column;text-align:center;padding:40px 20px;
+  background:radial-gradient(ellipse at 50% 45%, rgba(212,168,67,.06) 0%, transparent 65%);
+}
+.landing-eyebrow{
+  font-family:'Josefin Sans',sans-serif;font-weight:200;
+  letter-spacing:8px;font-size:.7rem;color:var(--gold);
+  text-transform:uppercase;opacity:0;margin-bottom:24px;
+}
+.landing-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,14vw,9rem);
+  font-weight:300;font-style:italic;
+  color:var(--text);line-height:.95;opacity:0;
+}
+.landing-name em{
+  background:linear-gradient(135deg,var(--gold-light),var(--blush));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-style:normal;font-weight:600;
+}
+.landing-sub{
+  font-family:'Josefin Sans',sans-serif;font-weight:200;
+  letter-spacing:5px;font-size:.8rem;color:var(--muted);
+  margin-top:20px;opacity:0;text-transform:uppercase;
+}
+#tapBtn{
+  margin-top:56px;padding:13px 42px;
+  background:transparent;border:1px solid rgba(212,168,67,.4);
+  border-radius:2px;color:var(--gold-light);
+  font-family:'Josefin Sans',sans-serif;font-size:.8rem;
+  font-weight:300;letter-spacing:5px;text-transform:uppercase;
+  cursor:pointer;opacity:0;transition:all .4s ease;position:relative;overflow:hidden;
+}
+#tapBtn::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(212,168,67,.1);
+  transform:translateX(-100%);transition:transform .4s ease;
+}
+#tapBtn:hover::before{transform:translateX(0);}
+#tapBtn:hover{border-color:var(--gold);letter-spacing:7px;}
+
+.a1{animation:fadeUp .9s .1s ease forwards;}
+.a2{animation:fadeUp .9s .4s ease forwards;}
+.a3{animation:fadeUp .9s .7s ease forwards;}
+.a4{animation:fadeUp .9s 1.0s ease forwards;}
+.a5{animation:fadeUp .9s 1.3s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════════════════════
+   SPLIT SCROLL
+   Left = sticky photo panel
+   Right = scrolling lyrics
+══════════════════════════════ */
+#story{
+  display:block;
+  min-height:unset;
+  position:relative;
+  z-index:1;
+}
+.story-inner{
+  display:flex;
+  align-items:flex-start;
+  width:100%;
+}
+
+/* LEFT sticky photo */
+.photo-panel{
+  position:sticky;
+  top:0;
+  width:50vw;
+  height:100vh;
+  flex-shrink:0;
+  overflow:hidden;
+  background:var(--bg);
+}
+.photo-slot{
+  position:absolute;
+  inset:32px 24px 32px 32px;
+  border-radius:6px;
+  overflow:hidden;
+  background:#0c0b17;
+}
+.photo-slot img{
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity .55s cubic-bezier(0.4,0,0.2,1);
+  position:absolute;inset:0;
+  will-change:opacity;
+}
+.photo-slot img.active{ opacity:1; }
+.photo-slot::after{
+  content:'';position:absolute;inset:0;
+  border:1px solid rgba(212,168,67,.1);
+  border-radius:6px;pointer-events:none;z-index:2;
+}
+.photo-counter{
+  position:absolute;
+  bottom:44px;right:32px;
+  font-family:'Josefin Sans',sans-serif;
+  font-size:.6rem;font-weight:200;letter-spacing:3px;
+  color:rgba(212,168,67,.45);z-index:3;
+}
+/* Right edge blends into bg so the panels feel unified */
+.photo-panel::after{
+  content:'';position:absolute;top:0;right:0;
+  width:48px;height:100%;
+  background:linear-gradient(to right,transparent,var(--bg));
+  pointer-events:none;z-index:4;
+}
+
+/* RIGHT scrolling lyrics */
+.lyrics-panel{
+  position:relative;
+  width:50vw;
+  flex-shrink:0;
+  padding:55vh 7vw 55vh 5vw;
+  display:flex;flex-direction:column;
+  align-items:flex-start;
+  gap:26vh;
+}
+.lyric{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:300;font-style:italic;
+  font-size:clamp(1.6rem,3.2vw,2.8rem);
+  line-height:1.35;
+  color:rgba(240,235,224,.1);
+  will-change:opacity,transform,filter;
+  transition:
+    opacity   .2s cubic-bezier(0.4,0,0.2,1),
+    filter    .2s cubic-bezier(0.4,0,0.2,1),
+    transform .25s cubic-bezier(0.4,0,0.2,1),
+    color     .25s ease,
+    text-shadow .25s ease;
+  display:flex;align-items:center;gap:0;
+}
+.lyric::before{
+  content:'';
+  display:inline-block;
+  width:0px;height:1px;
+  background:var(--gold);
+  vertical-align:middle;
+  flex-shrink:0;
+  transition:width .3s ease,margin-right .3s ease;
+  margin-right:0;
+}
+.lyric.active{
+  color:#ffffff;
+  text-shadow:0 2px 28px rgba(212,168,67,.3),0 0 55px rgba(232,132,154,.1);
+}
+.lyric.active::before{
+  width:20px;margin-right:14px;
+}
+
+/* Mobile — stack */
+@media(max-width:680px){
+  .photo-panel{
+    width:100vw;height:45vh;
+    position:sticky;top:0;z-index:10;
+  }
+  .photo-slot{ inset:16px 16px 24px 16px; }
+  .photo-counter{ bottom:32px; right:24px; }
+  .photo-panel::after{ 
+    content:'';position:absolute;bottom:0;left:0;top:auto;right:auto;
+    width:100%;height:48px;
+    background:linear-gradient(to bottom,transparent,var(--bg));
+  }
+  .story-inner{ flex-direction:column; }
+  .lyrics-panel{ width:100vw;padding:5vh 8vw 30vh;gap:16vh; }
+  .lyric{ font-size:clamp(1.4rem,6vw,2.2rem); }
+}
+
+/* ══════════
+   GALLERY
+══════════ */
+#gallery{
+  flex-direction:column;padding:110px 20px 130px;
+  background:var(--bg);z-index:3;
+}
+.gallery-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2.8rem,9vw,5rem);
+  color:var(--gold-light);margin-bottom:8px;text-align:center;
+  text-shadow:0 0 50px rgba(212,168,67,.2);
+}
+.gallery-subtitle{
+  font-family:'Josefin Sans',sans-serif;font-weight:200;
+  letter-spacing:5px;font-size:.68rem;color:var(--muted);
+  text-transform:uppercase;margin-bottom:60px;text-align:center;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:10px;max-width:1100px;width:100%;
+}
+.gallery-item{
+  position:relative;border-radius:3px;overflow:hidden;
+  cursor:pointer;aspect-ratio:1;
+  border:1px solid rgba(255,255,255,.03);
+  transition:transform .35s cubic-bezier(0.175,0.885,0.32,1.275),box-shadow .35s ease;
+}
+.gallery-item:hover{
+  transform:scale(1.06) translateY(-3px);
+  box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 0 1px rgba(212,168,67,.15);
+  z-index:2;
+}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:filter .35s;}
+.gallery-item:hover img{filter:brightness(1.1) saturate(1.05);}
+.gallery-item .overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(7,6,15,.8) 0%,transparent 55%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;
+}
+.gallery-item .overlay span{
+  font-family:'Josefin Sans',sans-serif;font-weight:200;
+  letter-spacing:2px;font-size:.6rem;color:var(--gold-light);text-transform:uppercase;
+}
+.gallery-item:hover .overlay{opacity:1;}
+
+/* MODAL */
+#modal{
+  display:none;position:fixed;inset:0;z-index:2000;
+  background:rgba(7,6,15,.97);
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(20px);
+}
+#modal.open{display:flex;}
+#modal img{
+  max-width:90vw;max-height:86vh;border-radius:4px;
+  object-fit:contain;border:1px solid rgba(255,255,255,.05);
+  animation:mIn .3s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+}
+@keyframes mIn{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:scale(1);}}
+#modalClose{
+  position:absolute;top:22px;right:26px;font-size:.7rem;
+  color:var(--muted);cursor:pointer;background:none;border:none;
+  font-family:'Josefin Sans',sans-serif;font-weight:300;letter-spacing:3px;
+  text-transform:uppercase;transition:color .2s;
+}
+#modalClose:hover{color:var(--text);}
+#modalNav{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:14px;}
+#modalNav button{
+  background:rgba(240,235,224,.06);border:1px solid rgba(240,235,224,.1);
+  color:var(--warm);padding:8px 22px;border-radius:2px;
+  font-family:'Josefin Sans',sans-serif;font-size:.68rem;letter-spacing:3px;
+  text-transform:uppercase;cursor:pointer;transition:all .2s;
+}
+#modalNav button:hover{background:rgba(212,168,67,.12);border-color:rgba(212,168,67,.35);color:var(--gold-light);}
+
+/* ══════════
+   FINALE
+══════════ */
+#finale{
+  flex-direction:column;text-align:center;padding:120px 20px;
+  background:
+    radial-gradient(ellipse at 30% 50%,rgba(212,168,67,.04) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 50%,rgba(232,132,154,.04) 0%,transparent 55%);
+}
+.finale-rule{
+  width:1px;height:70px;
+  background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+  margin:0 auto 48px;opacity:0;transition:opacity 1.2s ease;
+}
+.finale-rule.vis{opacity:1;}
+.finale-title{
+  font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;
+  font-size:clamp(2.5rem,8vw,5.5rem);color:var(--text);
+  margin-bottom:12px;line-height:1.1;
+  opacity:0;transform:translateY(28px);
+  transition:opacity 1.2s .2s ease,transform 1.2s .2s ease;
+}
+.finale-title em{
+  background:linear-gradient(135deg,var(--gold-light),var(--blush));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-style:normal;
+}
+.finale-title.vis{opacity:1;transform:translateY(0);}
+.finale-div{
+  width:50px;height:1px;background:var(--gold);
+  opacity:0;margin:28px auto;
+  transition:opacity 1s .7s ease,width 1s .7s ease;
+}
+.finale-div.vis{opacity:.4;width:100px;}
+.finale-body{
+  max-width:580px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(1.05rem,2.5vw,1.4rem);line-height:2.3;color:var(--muted);
+  opacity:0;transition:opacity 1.2s .95s ease;
+}
+.finale-body.vis{opacity:1;}
+.finale-body strong{color:var(--warm);font-weight:400;}
+
+/* ══════════
+   END
+══════════ */
+#endscreen{
+  flex-direction:column;text-align:center;padding:80px 20px 120px;
+  background:radial-gradient(ellipse at 50% 45%,rgba(212,168,67,.05) 0%,transparent 60%);
+}
+#endscreen .eyebrow{
+  font-family:'Josefin Sans',sans-serif;font-weight:200;
+  letter-spacing:7px;font-size:.68rem;color:var(--muted);
+  text-transform:uppercase;margin-bottom:20px;
+}
+#endscreen h2{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(2.8rem,9vw,6rem);color:var(--gold-light);
+  text-shadow:0 0 60px rgba(212,168,67,.25);
+  margin-bottom:12px;line-height:1.1;
+}
+#endscreen p{
+  color:var(--muted);font-family:'Josefin Sans',sans-serif;
+  font-weight:200;letter-spacing:2px;font-size:.8rem;
+  text-transform:uppercase;margin-bottom:50px;
+}
+#replayBtn{
+  padding:13px 42px;background:transparent;
+  border:1px solid rgba(212,168,67,.35);border-radius:2px;
+  color:var(--gold-light);font-family:'Josefin Sans',sans-serif;
+  font-size:.8rem;font-weight:300;letter-spacing:5px;text-transform:uppercase;
+  cursor:pointer;transition:all .4s ease;position:relative;overflow:hidden;
+}
+#replayBtn::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(212,168,67,.1);transform:translateX(-100%);transition:transform .4s ease;
+}
+#replayBtn:hover::before{transform:translateX(0);}
+#replayBtn:hover{border-color:var(--gold);letter-spacing:7px;}
+
+#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:500;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(212,168,67,.2);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<canvas id="confettiCanvas"></canvas>
+<div id="progress"></div>
+<button id="musicBtn">♪ Play</button>
+<audio id="bgMusic" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg"/>
+</audio>
+
+<!-- 1. LANDING -->
+<section id="landing">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="landing-eyebrow" id="l0">April 29th &nbsp;·&nbsp; A Special Day</div>
+    <div class="landing-name" id="l1"><em>Happy Birthday</em></div>
+    <div class="landing-name" id="l2" style="font-size:clamp(3rem,10vw,7rem);margin-top:4px;">Dhrubo</div>
+    <div class="landing-sub" id="l3">A letter from someone who cares</div>
+    <button id="tapBtn">Begin &nbsp;→</button>
+  </div>
+</section>
+
+<!-- 2. SPLIT SCROLL -->
+<section id="story">
+  <div class="story-inner">
+    <div class="photo-panel" id="photoPanel">
+      <div class="photo-slot" id="photoSlot"></div>
+      <div class="photo-counter" id="photoCounter">01 / 28</div>
+    </div>
+    <div class="lyrics-panel" id="lyricsPanel"></div>
+  </div>
+</section>
+
+<!-- 3. GALLERY -->
+<section id="gallery">
+  <div class="gallery-title">Memories</div>
+  <div class="gallery-subtitle">Every moment, kept forever</div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<div id="modal">
+  <button id="modalClose">Close &nbsp;✕</button>
+  <img id="modalImg" src="" alt="Memory"/>
+  <div id="modalNav">
+    <button id="modalPrev">← Prev</button>
+    <button id="modalNext">Next →</button>
+  </div>
+</div>
+
+<!-- 4. FINALE -->
+<section id="finale">
+  <div class="finale-rule" id="finaleRule"></div>
+  <div class="finale-title" id="finaleTitle">Happy Birthday, <em>Brother</em></div>
+  <div class="finale-div" id="finaleDiv"></div>
+  <div class="finale-body" id="finaleBody">
+    <strong>I'll always be your well-wisher.</strong><br/>
+    Always hoping the best for you,<br/>
+    always proud of how far you've come.<br/><br/>
+    <strong>I just want to see you happy in life—</strong><br/>
+    truly, genuinely, deeply happy.<br/>
+    That's all I could ever ask for.<br/><br/>
+    <strong>Have the most beautiful birthday, Dhrubo. 🎂</strong>
+  </div>
+</section>
+
+<!-- 5. END -->
+<section id="endscreen">
+  <div class="eyebrow">With love</div>
+  <h2>Cheers to You ✦</h2>
+  <p>May this be your most beautiful chapter yet</p>
+  <button id="replayBtn">↺ &nbsp; Replay Memories</button>
+</section>
+
+<script>
+const images = [
+  'IMG20231213183919.jpg',
+  'IMG20260112233043.jpg',
+  'LMC_20220422_125104_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20220424_160938_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20220424_164511_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20220826_185250_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20220826_193034_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20220826_193438_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20220826_200629_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20220923_175333_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20221020_175315_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20221020_175459_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20221212_163631_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20230108_184609_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20230108_185207_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20230516_150147_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20231101_173342_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20231129_180939_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20231202_103951_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'LMC_20240127_165450_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20240127_171602_🧊 iPhone-Tone x GcamTheBoss .PORTRAIT.jpg',
+  'LMC_20260129_214744_🧊 iPhone-Tone x GcamTheBoss .jpg',
+  'Screenshot_2026-04-29-07-36-07-56_965bbf4d18d205f782c6b8409c5773a4.jpg',
+  'Screenshot_2026-04-29-07-36-33-04_965bbf4d18d205f782c6b8409c5773a4.jpg',
+  'Screenshot_2026-04-29-07-36-53-22_965bbf4d18d205f782c6b8409c5773a4.jpg',
+  'Screenshot_2026-04-29-07-37-32-55_965bbf4d18d205f782c6b8409c5773a4.jpg',
+  'Screenshot_2026-04-29-07-37-56-41_965bbf4d18d205f782c6b8409c5773a4.jpg'
+];
+
+const lines = [
+  "It all started on a random day—",
+  "on the way to Nowshad vai's private,",
+  "with Tajbiul by my side.",
+  "That's when I first met you.",
+  "And somehow, from that moment,",
+  "you became a part of everything.",
+  "Side by side on the same bench",
+  "at Rubel vai's class—",
+  "hours melting away at Radhabollov,",
+  "doing nothing but laughing.",
+  "Then the rush of exams",
+  "through the halls of Malek Tower.",
+  "Standing in front of Concord Tower,",
+  "just watching the world drift by—",
+  "no destination, no hurry.",
+  "Just us, and the city breathing.",
+  "Random outings at Nazira Bazar,",
+  "the green stillness of Sreemongol,",
+  "and even the roads of my campus—",
+  "every place grew a little warmer",
+  "because you were there.",
+  "Through the bright days and the heavy ones,",
+  "through the highs and the quiet lows—",
+  "you were always part of the story.",
+  "Even when we don't speak every day,",
+  "you never leave my mind.",
+  "You are someone who works hard",
+  "and carries light within you.",
+  "You're already doing great—",
+  "and I know the best of you",
+  "is still yet to come."
+];
+
+/* PARTICLES */
+(function(){
+  const c=document.getElementById('particles'),x=c.getContext('2d');let s=[];
+  const rs=()=>{c.width=innerWidth;c.height=innerHeight;};
+  const mk=()=>{s=[];for(let i=0;i<90;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.3+.3,sp:Math.random()*.004+.001,ph:Math.random()*Math.PI*2});};
+  const dr=()=>{x.clearRect(0,0,c.width,c.height);const t=Date.now()*.001;s.forEach(p=>{const a=.07+.4*(.5+.5*Math.sin(t*p.sp*60+p.ph));x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(240,235,224,${a})`;x.fill();});requestAnimationFrame(dr);};
+  rs();mk();dr();window.addEventListener('resize',()=>{rs();mk();});
+})();
+
+/* BUILD */
+const slot   = document.getElementById('photoSlot');
+const lPanel = document.getElementById('lyricsPanel');
+const ctr    = document.getElementById('photoCounter');
+const grid   = document.getElementById('galleryGrid');
+
+const photoImgs = images.map((src,i)=>{
+  const img=document.createElement('img');
+  img.src=src;img.alt='';
+  if(i===0)img.classList.add('active');
+  slot.appendChild(img);return img;
+});
+
+const lyricEls = lines.map(line=>{
+  const p=document.createElement('p');p.className='lyric';p.textContent=line;
+  lPanel.appendChild(p);return p;
+});
+
+let modalIdx=0;
+images.forEach((src,idx)=>{
+  const div=document.createElement('div');div.className='gallery-item';
+  div.innerHTML=`<img src="${src}" alt="Memory" loading="lazy"/><div class="overlay"><span>View</span></div>`;
+  div.addEventListener('click',()=>openModal(idx));grid.appendChild(div);
+});
+function openModal(idx){
+  modalIdx=idx;
+  document.getElementById('modalImg').src=images[idx];
+  document.getElementById('modal').classList.add('open');
+}
+document.getElementById('modalClose').addEventListener('click',()=>document.getElementById('modal').classList.remove('open'));
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget)e.target.classList.remove('open');});
+document.getElementById('modalPrev').addEventListener('click',()=>openModal((modalIdx-1+images.length)%images.length));
+document.getElementById('modalNext').addEventListener('click',()=>openModal((modalIdx+1)%images.length));
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('modal').classList.contains('open'))return;
+  if(e.key==='ArrowLeft')openModal((modalIdx-1+images.length)%images.length);
+  if(e.key==='ArrowRight')openModal((modalIdx+1)%images.length);
+  if(e.key==='Escape')document.getElementById('modal').classList.remove('open');
+});
+
+/* SCROLL ENGINE */
+let ticking=false,lastActive=-1;
+function tick(){
+  const mx=document.body.scrollHeight-innerHeight;
+  document.getElementById('progress').style.width=(mx>0?scrollY/mx*100:0)+'%';
+  const sr=document.getElementById('story').getBoundingClientRect();
+  if(sr.bottom<0||sr.top>innerHeight){ticking=false;return;}
+  
+  const isMobile = window.innerWidth <= 680;
+  const cy = isMobile ? innerHeight * 0.72 : innerHeight * 0.5;
+  const lPanelRect = lPanel.getBoundingClientRect();
+  
+  let activeIdx=0,minD=Infinity;
+  lyricEls.forEach((el,i)=>{
+    const untransformedTop = lPanelRect.top + el.offsetTop;
+    const mid = untransformedTop + el.offsetHeight * 0.5;
+    const dist = mid - cy;
+    const abs=Math.abs(dist);
+    if(abs<minD){minD=abs;activeIdx=i;}
+    const maxD=innerHeight*.65;
+    const ratio=Math.min(abs/maxD,1);
+    const q=ratio*ratio;
+    el.style.opacity=Math.max(0.06,1-q*.94);
+    el.style.filter=ratio>.15?`blur(${(ratio*5).toFixed(1)}px)`:'none';
+    el.style.transform=`translateY(${(dist*.07).toFixed(1)}px) scale(${(.96+.04*(1-ratio)).toFixed(3)})`;
+    if(1-q*.94>.82)el.classList.add('active');
+    else el.classList.remove('active');
+  });
+  if(activeIdx!==lastActive){
+    const ni=activeIdx%photoImgs.length;
+    const pi=lastActive>=0?(lastActive%photoImgs.length):-1;
+    if(pi>=0&&pi!==ni)photoImgs[pi].classList.remove('active');
+    photoImgs[ni].classList.add('active');
+    ctr.textContent=String(ni+1).padStart(2,'0')+' / '+String(images.length).padStart(2,'0');
+    lastActive=activeIdx;
+  }
+  ticking=false;
+}
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(tick);ticking=true;}},{passive:true});
+tick();
+
+/* LANDING */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('l0').classList.add('a1'),150);
+  setTimeout(()=>document.getElementById('l1').classList.add('a2'),400);
+  setTimeout(()=>document.getElementById('l2').classList.add('a3'),680);
+  setTimeout(()=>document.getElementById('l3').classList.add('a4'),920);
+  setTimeout(()=>document.getElementById('tapBtn').classList.add('a5'),1180);
+});
+document.getElementById('tapBtn').addEventListener('click',()=>{
+  document.getElementById('story').scrollIntoView({behavior:'smooth'});tryPlay();
+});
+
+/* MUSIC */
+const music=document.getElementById('bgMusic'),mBtn=document.getElementById('musicBtn');
+let playing=false;
+function tryPlay(){if(!playing){music.volume=.35;music.play().then(()=>{playing=true;mBtn.textContent='♪ Playing';}).catch(()=>{});}}
+mBtn.addEventListener('click',()=>{if(playing){music.pause();playing=false;mBtn.textContent='♪ Play';}else tryPlay();});
+
+/* FINALE */
+new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting)['finaleRule','finaleTitle','finaleDiv','finaleBody'].forEach(id=>document.getElementById(id).classList.add('vis'));
+},{threshold:.2}).observe(document.getElementById('finale'));
+
+/* CONFETTI */
+const cc=document.getElementById('confettiCanvas'),ccx=cc.getContext('2d');
+let pieces=[],running=false;
+const rsz=()=>{cc.width=innerWidth;cc.height=innerHeight;};rsz();
+window.addEventListener('resize',rsz);
+const pal=['#d4a843','#f0d080','#e8849a','#b8a0d8','#f0ebe0'];
+function launch(){
+  pieces=[];
+  for(let i=0;i<200;i++)pieces.push({x:Math.random()*cc.width,y:-20-Math.random()*cc.height*.5,w:Math.random()*10+4,h:Math.random()*5+2,color:pal[Math.floor(Math.random()*pal.length)],angle:Math.random()*360,speed:Math.random()*3.5+1.5,spin:Math.random()*2.5-1.25,drift:Math.random()*.8-.4});
+  running=true;animC();
+}
+function animC(){
+  ccx.clearRect(0,0,cc.width,cc.height);let alive=false;
+  pieces.forEach(p=>{
+    p.y+=p.speed;p.x+=p.drift;p.angle+=p.spin;
+    if(p.y<cc.height+20)alive=true;
+    ccx.save();ccx.translate(p.x,p.y);ccx.rotate(p.angle*Math.PI/180);
+    ccx.globalAlpha=Math.max(0,1-p.y/cc.height);ccx.fillStyle=p.color;
+    ccx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ccx.restore();
+  });
+  if(alive)requestAnimationFrame(animC);else running=false;
+}
+new IntersectionObserver(e=>{if(e[0].isIntersecting&&!running)launch();},{threshold:.3}).observe(document.getElementById('endscreen'));
+document.getElementById('replayBtn').addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});setTimeout(launch,900);});
+</script>
+</body>
+</html>
